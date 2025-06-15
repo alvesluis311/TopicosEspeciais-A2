@@ -1,10 +1,14 @@
-package br.unitins.topicos.projetoa2;
+package br.unitins.topicos.projetoa2.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+import br.unitins.topicos.projetoa2.dto.DeveloperDTO;
+import br.unitins.topicos.projetoa2.model.Developer;
+import br.unitins.topicos.projetoa2.service.DeveloperService;
 
 @Controller("/developers")
 public class DeveloperController {

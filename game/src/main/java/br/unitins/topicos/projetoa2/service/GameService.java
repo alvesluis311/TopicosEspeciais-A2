@@ -1,10 +1,16 @@
-package br.unitins.topicos.projetoa2;
+package br.unitins.topicos.projetoa2.service;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+
+import br.unitins.topicos.projetoa2.dto.GameDTO;
+import br.unitins.topicos.projetoa2.model.Developer;
+import br.unitins.topicos.projetoa2.model.Game;
+import br.unitins.topicos.projetoa2.repository.DeveloperRepository;
+import br.unitins.topicos.projetoa2.repository.GameRepository;
 
 @Singleton
 public class GameService {

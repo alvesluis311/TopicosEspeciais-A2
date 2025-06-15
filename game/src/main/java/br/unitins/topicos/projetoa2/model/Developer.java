@@ -1,10 +1,14 @@
-package br.unitins.topicos.projetoa2;
+package br.unitins.topicos.projetoa2.model;
 
 import java.time.LocalDate;
+
+import br.unitins.topicos.projetoa2.dto.DeveloperDTO;
+import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "developers")
+@Serdeable
 public class Developer {
 
     @Id

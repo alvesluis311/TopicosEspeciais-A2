@@ -1,13 +1,14 @@
-package br.unitins.topicos.projetoa2;
-
-import io.micronaut.core.annotation.Introspected;
+package br.unitins.topicos.projetoa2.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-@Introspected
+import br.unitins.topicos.projetoa2.dto.GameDTO;
+import io.micronaut.serde.annotation.Serdeable;
+
 @Entity
 @Table(name = "games")
+@Serdeable
 public class Game {
 
     @Id

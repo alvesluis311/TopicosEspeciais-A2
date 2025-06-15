@@ -1,9 +1,10 @@
-package br.unitins.topicos.projetoa2;
+package br.unitins.topicos.projetoa2.dto;
 
-import io.micronaut.core.annotation.Introspected;
 import java.time.LocalDate;
 
-@Introspected
+import io.micronaut.serde.annotation.Serdeable;
+
+@Serdeable
 public record GameDTO(
     String nome,
     String genero,

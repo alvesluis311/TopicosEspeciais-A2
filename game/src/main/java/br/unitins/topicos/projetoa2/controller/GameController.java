@@ -1,4 +1,4 @@
-package br.unitins.topicos.projetoa2;
+package br.unitins.topicos.projetoa2.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
@@ -6,6 +6,10 @@ import io.micronaut.http.annotation.*;
 import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Optional;
+
+import br.unitins.topicos.projetoa2.dto.GameDTO;
+import br.unitins.topicos.projetoa2.model.Game;
+import br.unitins.topicos.projetoa2.service.GameService;
 
 @Controller("/games")
 public class GameController {

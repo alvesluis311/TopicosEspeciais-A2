@@ -1,9 +1,13 @@
-package br.unitins.topicos.projetoa2;
+package br.unitins.topicos.projetoa2.service;
 
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+
+import br.unitins.topicos.projetoa2.dto.DeveloperDTO;
+import br.unitins.topicos.projetoa2.model.Developer;
+import br.unitins.topicos.projetoa2.repository.DeveloperRepository;
 
 @Singleton
 public class DeveloperService {

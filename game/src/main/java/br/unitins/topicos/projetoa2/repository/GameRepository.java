@@ -1,5 +1,6 @@
-package br.unitins.topicos.projetoa2;
+package br.unitins.topicos.projetoa2.repository;
 
+import br.unitins.topicos.projetoa2.model.Game;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.repository.CrudRepository;
 
