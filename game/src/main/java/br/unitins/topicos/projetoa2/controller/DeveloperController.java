@@ -3,6 +3,8 @@ package br.unitins.topicos.projetoa2.controller;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,30 +20,59 @@ public class DeveloperController {
     private DeveloperService developerService;
 
     @Get
-    public List<Developer> listarDevelopers() {
-        return developerService.listarDevelopers();
+    public HttpResponse<List<Developer>> listarDevelopers() {
+        return HttpResponse.ok(developerService.listarDevelopers());
     }
 
     @Get("/{id}")
-    public HttpResponse<Developer> buscarPorId(@PathVariable Long id) {
-        Optional<Developer> developer = developerService.buscarPorId(id);
-        return developer.map(HttpResponse::ok)
-                        .orElse(HttpResponse.notFound());
+    public HttpResponse<?> buscarPorId(@PathVariable Long id) {
+
+        try {
+            Optional<Developer> developer = developerService.buscarPorId(id);
+            if (developer.isPresent()) {
+                return HttpResponse.ok(developer.get());
+            } else {
+                return HttpResponse.notFound("Developer não encontrada");
+            }
+        } catch (Exception e) {
+            return HttpResponse.badRequest("Erro ao buscar developer: " + e.getMessage());
+        }
     }
 
     @Post
-    public Developer salvarDeveloper(@Body DeveloperDTO developerDTO) {
-        return developerService.salvarDeveloper(developerDTO);
+    public HttpResponse<?> salvarDeveloper(@Body @Valid DeveloperDTO developerDTO) {
+
+        try {
+            Developer developer = developerService.salvarDeveloper(developerDTO);
+            return HttpResponse.created(developer);
+        } catch (Exception e) {
+            return HttpResponse.badRequest("Erro ao salvar developer: " + e.getMessage());
+        }
     }
 
     @Put("/{id}")
-    public Developer atualizarDeveloper(@PathVariable Long id, @Body DeveloperDTO developerDTO) {
-        return developerService.atualizarDeveloper(id, developerDTO);
+    public HttpResponse<?> atualizarDeveloper(@PathVariable Long id, @Body @Valid DeveloperDTO developerDTO) {
+
+        try {
+            Developer developer = developerService.atualizarDeveloper(id, developerDTO);
+            return HttpResponse.ok(developer);
+        } catch (EntityNotFoundException e) {
+            return HttpResponse.notFound(e.getMessage());
+        } catch (Exception e) {
+            return HttpResponse.badRequest("Erro ao atualizar developer: " + e.getMessage());
+        }
     }
 
     @Delete("/{id}")
-    public HttpResponse<Void> deletarDeveloper(@PathVariable Long id) {
-        developerService.deletarDeveloper(id);
-        return HttpResponse.noContent();
+    public HttpResponse<?> deletarDeveloper(@PathVariable Long id) {
+
+        try {
+            developerService.deletarDeveloper(id);
+            return HttpResponse.noContent();
+        } catch (EntityNotFoundException e) {
+            return HttpResponse.notFound(e.getMessage());
+        } catch (Exception e) {
+            return HttpResponse.badRequest("Erro ao deletar developer: " + e.getMessage());
+        }
     }
 }

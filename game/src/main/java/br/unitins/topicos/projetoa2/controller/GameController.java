@@ -4,6 +4,9 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,29 +21,59 @@ public class GameController {
     private GameService gameService;
 
     @Get
-    public List<Game> listarGames() {
-        return gameService.listarGames();
+    public HttpResponse<List<Game>> listarGames() {
+        return HttpResponse.ok(gameService.listarGames());
     }
 
     @Get("/{id}")
-    public HttpResponse<Game> buscarPorId(@PathVariable Long id) {
-        Optional<Game> game = gameService.buscarPorId(id);
-        return game.map(HttpResponse::ok).orElse(HttpResponse.notFound());
+    public HttpResponse<?> buscarPorId(@PathVariable Long id) {
+
+        try {
+            Optional<Game> game = gameService.buscarPorId(id);
+            if (game.isPresent()) {
+                return HttpResponse.ok(game.get());
+            } else {
+                return HttpResponse.notFound("Jogo não encontrado");
+            }
+        } catch (Exception e) {
+            return HttpResponse.badRequest("Erro ao buscar game: " + e.getMessage());
+        }
     }
 
     @Post
-    public Game salvarGame(@Body GameDTO gameDTO) {
-        return gameService.salvarGame(gameDTO);
+    public HttpResponse<?> salvarGame(@Body @Valid GameDTO gameDTO) {
+
+        try {
+            Game game = gameService.salvarGame(gameDTO);
+            return HttpResponse.created(game);
+        } catch (Exception e) {
+            return HttpResponse.badRequest("Erro ao salvar jogo: " + e.getMessage());
+        }
     }
 
     @Put("/{id}")
-    public Game atualizarGame(@PathVariable Long id, @Body GameDTO gameDTO) {
-        return gameService.atualizarGame(id, gameDTO);
+    public HttpResponse<?> atualizarGame(@PathVariable Long id, @Body @Valid GameDTO gameDTO) {
+
+        try {
+            Game game = gameService.atualizarGame(id, gameDTO);
+            return HttpResponse.ok(game);
+        } catch (EntityNotFoundException e) {
+            return HttpResponse.notFound(e.getMessage());
+        } catch (Exception e) {
+            return HttpResponse.badRequest("Erro ao atualizar jogo: " + e.getMessage());
+        }
     }
 
     @Delete("/{id}")
-    public HttpResponse<Void> deletarGame(@PathVariable Long id) {
-        gameService.deletarGame(id);
-        return HttpResponse.noContent();
+    public HttpResponse<?> deletarGame(@PathVariable Long id) {
+
+        try {
+            gameService.deletarGame(id);
+            return HttpResponse.noContent();
+        } catch (EntityNotFoundException e) {
+            return HttpResponse.notFound(e.getMessage());
+        } catch (Exception e) {
+            return HttpResponse.badRequest("Erro ao deletar jogo: " + e.getMessage());
+        }
     }
 }

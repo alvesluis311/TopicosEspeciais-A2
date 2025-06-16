@@ -7,7 +7,10 @@ import br.unitins.topicos.projetoa2.dto.GameDTO;
 import io.micronaut.serde.annotation.Serdeable;
 
 @Entity
-@Table(name = "games")
+@Table(
+    name = "games",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"nome", "developer", "data_lancamento"})
+    )
 @Serdeable
 public class Game {
 
@@ -31,7 +34,7 @@ public class Game {
     @JoinColumn(name = "plataforma", nullable = false)
     private Plataforma plataforma;
 
-    @Column(nullable = false)
+    @Column(name = "data_lancamento", nullable = false)
     private LocalDate dataLancamento;
 
     public Game() {}
