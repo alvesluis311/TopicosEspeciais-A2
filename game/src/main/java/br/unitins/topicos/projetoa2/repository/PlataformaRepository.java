@@ -1,9 +1,10 @@
 package br.unitins.topicos.projetoa2.repository;
 
-import br.unitins.topicos.projetoa2.model.Game;
+import br.unitins.topicos.projetoa2.model.Plataforma;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface GameRepository extends JpaRepository<Game, Long> {
+public interface PlataformaRepository extends JpaRepository<Plataforma, Long> {
+    
 }

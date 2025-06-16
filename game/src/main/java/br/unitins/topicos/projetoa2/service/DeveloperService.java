@@ -1,5 +1,6 @@
 package br.unitins.topicos.projetoa2.service;
 
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -12,11 +13,8 @@ import br.unitins.topicos.projetoa2.repository.DeveloperRepository;
 @Singleton
 public class DeveloperService {
 
-    private final DeveloperRepository developerRepository;
-
-    public DeveloperService(DeveloperRepository developerRepository) {
-        this.developerRepository = developerRepository;
-    }
+    @Inject
+    private DeveloperRepository developerRepository;
 
     public List<Developer> listarDevelopers() {
         return developerRepository.findAll();

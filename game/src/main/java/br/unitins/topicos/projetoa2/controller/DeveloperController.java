@@ -2,6 +2,7 @@ package br.unitins.topicos.projetoa2.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import jakarta.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +14,8 @@ import br.unitins.topicos.projetoa2.service.DeveloperService;
 @Controller("/developers")
 public class DeveloperController {
 
-    private final DeveloperService developerService;
-
-    public DeveloperController(DeveloperService developerService) {
-        this.developerService = developerService;
-    }
+    @Inject
+    private DeveloperService developerService;
 
     @Get
     public List<Developer> listarDevelopers() {

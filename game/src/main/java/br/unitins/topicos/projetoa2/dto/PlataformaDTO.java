@@ -5,12 +5,9 @@ import java.time.LocalDate;
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
-public record GameDTO(
+public record PlataformaDTO(
     String nome,
-    String genero,
-    Double preco,
-    Long idPlataforma,
-    Long idDeveloper,
     LocalDate dataLancamento
-) {}
-
+) {
+    
+}

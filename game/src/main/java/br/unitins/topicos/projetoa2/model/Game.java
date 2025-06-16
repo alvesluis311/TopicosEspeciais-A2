@@ -23,32 +23,33 @@ public class Game {
     @Column(nullable = false)
     private Double preco;
 
-    @Column(nullable = false)
-    private String plataforma;
-
     @ManyToOne
     @JoinColumn(name = "developer", nullable = false)
     private Developer developer;
+    
+    @ManyToOne
+    @JoinColumn(name = "plataforma", nullable = false)
+    private Plataforma plataforma;
 
     @Column(nullable = false)
     private LocalDate dataLancamento;
 
     public Game() {}
 
-    public Game(GameDTO gameDTO, Developer developer) {
+    public Game(GameDTO gameDTO, Developer developer, Plataforma plataforma) {
         this.nome = gameDTO.nome();
         this.genero = gameDTO.genero();
         this.preco = gameDTO.preco();
-        this.plataforma = gameDTO.plataforma();
+        this.plataforma = plataforma;
         this.dataLancamento = gameDTO.dataLancamento();
         this.developer = developer;
     }
 
-    public void setDados(GameDTO gameDTO, Developer developer) {
+    public void setDados(GameDTO gameDTO, Developer developer, Plataforma plataforma) {
         this.nome = gameDTO.nome();
         this.genero = gameDTO.genero();
         this.preco = gameDTO.preco();
-        this.plataforma = gameDTO.plataforma();
+        this.plataforma = plataforma;
         this.dataLancamento = gameDTO.dataLancamento();
         this.developer = developer;
     }
@@ -81,11 +82,11 @@ public class Game {
         this.preco = preco;
     }
 
-    public String getPlataforma() {
+    public Plataforma getPlataforma() {
         return plataforma;
     }
 
-    public void setPlataforma(String plataforma) {
+    public void setPlataforma(Plataforma plataforma) {
         this.plataforma = plataforma;
     }
 
