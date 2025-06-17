@@ -10,10 +10,31 @@ services:
       MYSQL_USER: game_user
       MYSQL_PASSWORD: game_pass
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-    restart: unless-stopped
+    networks:
+      - app-network
+
+  app:
+    build: .
+    container_name: micronaut-app
+    restart: on-failure
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql_container
+      DB_PORT: 3306
+      DB_NAME: game_db
+      DB_USER: game_user
+      DB_PASSWORD: game_pass
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
 
 volumes:
   mysql_data:
+
+networks:
+  app-network:
